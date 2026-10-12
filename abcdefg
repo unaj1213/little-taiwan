@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Taiwan | Travel Guide</title>
+<style>
+:root {
+  --green: #286650;
+  --mint: #dcefe3;
+  --cream: #fffaf0;
+  --orange: #ef9c65;
+  --text: #203b32;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+}
+header {
+  background: var(--green);
+  color: white;
+  text-align: center;
+  padding: 48px 20px;
+}
+header h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); margin: 10px; }
+header p { font-size: 1.1rem; line-height: 1.7; }
+nav {
+  background: white;
+  padding: 15px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+nav a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 12px;
+}
+section { max-width: 1100px; margin: auto; padding: 35px 20px; }
+h2 { color: var(--green); font-size: 2rem; }
+.intro {
+  background: var(--mint);
+  border-radius: 20px;
+  padding: 25px;
+  line-height: 1.8;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+input, select, button {
+  font: inherit;
+  padding: 12px 15px;
+  border-radius: 10px;
+}
+input, select {
+  border: 1px solid #c5d8cb;
+  background: white;
+}
+button {
+  border: 0;
+  background: var(--green);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover { background: #194b39; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px #244b3215;
+}
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.card-content { padding: 18px; }
+.card h3 { color: var(--green); margin-top: 0; }
+.card p { line-height: 1.6; }
+.region {
+  display: inline-block;
+  background: var(--mint);
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: .8rem;
+}
+.save {
+  background: #f8e8d8;
+  color: #754326;
+}
+.save.saved {
+  background: var(--orange);
+  color: #352014;
+}
+#result {
+  background: var(--mint);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 15px;
+  line-height: 1.7;
+}
+footer {
+  text-align: center;
+  padding: 30px;
+  background: var(--green);
+  color: white;
+  line-height: 1.8;
+}
+@media(max-width:500px) {
+  nav a { display: inline-block; margin: 6px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p>✦ SMALL ISLAND, BIG ADVENTURES ✦</p>
+  <h1>Little Taiwan 🇹🇼</h1>
+  <p>Your pocket travel guide to Taiwan.<br>
+  Discover beautiful landscapes, local food, and amazing culture.</p>
+</header>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#places">Destinations</a>
+  <a href="#counties">22 Cities & Counties</a>
+  <a href="#planner">Trip Planner</a>
+</nav>
+
+<section id="about">
+  <div class="intro">
+    <h2>Welcome to Taiwan!</h2>
+    Taiwan is a beautiful island with mountains, beaches, lively cities,
+    and traditional culture. From delicious night-market snacks to
+    breathtaking natural scenery, every place has its own story.
+    <br><br>
+    This website helps you explore Taiwan and find a destination
+    that matches your interests.
+  </div>
+</section>
+
+<section id="places">
+  <h2>Featured Destinations</h2>
+  <p>Choose a destination and discover your next adventure!</p>
+  <div class="grid" id="featured"></div>
+</section>
+
+<section id="counties">
+  <h2>Explore All 22 Cities & Counties</h2>
+  <p>Search in English or Chinese, or filter places by region.</p>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search a city or county..." aria-label="Search cities and counties">
+    <select id="region" aria-label="Filter by region">
+      <option value="All">All Regions</option>
+      <option value="North">Northern Taiwan</option>
+      <option value="Central">Central Taiwan</option>
+      <option value="South">Southern Taiwan</option>
+      <option value="East">Eastern Taiwan</option>
+      <option value="Islands">Outlying Islands</option>
+    </select>
+  </div>
+  <p id="count"></p>
+  <div class="grid" id="countyGrid"></div>
+</section>
+
+<section id="planner">
+  <h2>Plan Your Little Escape ✨</h2>
+  <p>What kind of trip are you looking for today?</p>
+  <div class="controls">
+    <select id="mood">
+      <option value="nature">I love nature and mountains</option>
+      <option value="food">I want local food and culture</option>
+      <option value="beach">I want sunshine and beaches</option>
+      <option value="city">I want to explore a city</option>
+    </select>
+    <button id="plan">Find My Destination</button>
+    <button id="random">Surprise Me!</button>
+  </div>
+  <div id="result" aria-live="polite">
+    Your next adventure is waiting. Choose your travel mood!
+  </div>
+</section>
+
+<footer>
+  <strong>Little Taiwan | Your Island Adventure</strong><br>
+  Travel gently. Discover more. Make wonderful memories.<br>
+  Made with love for Taiwan 🇹🇼
+</footer>
+
+<script>
+const places = [
+  {
+    en:"Taipei City", zh:"台北市", region:"North",
+    desc:"Explore Taipei 101, night markets, museums, and lively city streets.",
+    image:"https://images.unsplash.com/photo-1470004914212-05527e49370b?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"New Taipei City", zh:"新北市", region:"North",
+    desc:"Visit Jiufen Old Street, Tamsui, and beautiful northern coastlines.",
+    image:"https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Keelung City", zh:"基隆市", region:"North",
+    desc:"Enjoy the harbor, Miaokou Night Market, and fresh seafood.",
+    image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Taoyuan City", zh:"桃園市", region:"North",
+    desc:"Discover Daxi Old Street, reservoirs, and green mountain trails.",
+    image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Hsinchu City", zh:"新竹市", region:"North",
+    desc:"Try local rice noodles and explore the historic City God Temple area.",
+    image:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Hsinchu County", zh:"新竹縣", region:"North",
+    desc:"Experience Hakka culture, mountain villages, and peaceful nature.",
+    image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Yilan County", zh:"宜蘭縣", region:"North",
+    desc:"Relax in hot springs, visit farms, and enjoy Pacific Ocean views.",
+    image:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Miaoli County", zh:"苗栗縣", region:"Central",
+    desc:"Explore rolling hills, traditional crafts, and Hakka communities.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Taichung City", zh:"台中市", region:"Central",
+    desc:"Visit art spaces, creative cafés, shopping areas, and night markets.",
+    image:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Changhua County", zh:"彰化縣", region:"Central",
+    desc:"Walk through Lukang Old Street and taste traditional local snacks.",
+    image:"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Nantou County", zh:"南投縣", region:"Central",
+    desc:"Discover Sun Moon Lake, mountain forests, and highland scenery.",
+    image:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Yunlin County", zh:"雲林縣", region:"Central",
+    desc:"Learn about traditional puppet theatre, temples, and rural life.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Chiayi City", zh:"嘉義市", region:"South",
+    desc:"Enjoy local turkey rice, cultural parks, and a relaxed city atmosphere.",
+    image:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Chiayi County", zh:"嘉義縣", region:"South",
+    desc:"Visit Alishan for forest trails, sunrise, and a sea of clouds.",
+    image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Tainan City", zh:"台南市", region:"South",
+    desc:"Discover historic temples, old streets, forts, and famous street food.",
+    image:"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Kaohsiung City", zh:"高雄市", region:"South",
+    desc:"Explore the harbor, Pier-2 Art Center, and beautiful waterfront sunsets.",
+    image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Pingtung County", zh:"屏東縣", region:"South",
+    desc:"Relax on Kenting's beaches and explore tropical landscapes.",
+    image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Hualien County", zh:"花蓮縣", region:"East",
+    desc:"Admire dramatic mountains, Qixingtan Beach, and the Pacific coast.",
+    image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Taitung County", zh:"台東縣", region:"East",
+    desc:"Enjoy rice fields, ocean views, hot springs, and a slower pace of life.",
+    image:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Penghu County", zh:"澎湖縣", region:"Islands",
+    desc:"See basalt cliffs, clear blue bays, and charming island villages.",
+    image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Kinmen County", zh:"金門縣", region:"Islands",
+    desc:"Explore historic villages, traditional buildings, and coastal forts.",
+    image:"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=700&q=80"
+  },
+  {
+    en:"Lienchiang County (Matsu)", zh:"連江縣（馬祖）", region:"Islands",
+    desc:"Discover stone villages, granite coastlines, and peaceful island views.",
+    image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"
+  }
+];
+
+const featured = [
+  {en:"Alishan", zh:"阿里山", region:"Nature",
+   desc:"Wake up above the clouds and walk among ancient trees.",
+   image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=700&q=80"},
+  {en:"Tainan", zh:"台南", region:"Culture",
+   desc:"Explore old streets, temples, and delicious local snacks.",
+   image:"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=700&q=80"},
+  {en:"Kenting", zh:"墾丁", region:"Coast",
+   desc:"Enjoy tropical beaches, sea breezes, and golden sunsets.",
+   image:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80"}
+];
+
+function createCard(place, isFeatured=false) {
+  const card = document.createElement("article");
+  card.className = "card";
+
+  const img = document.createElement("img");
+  img.src = place.image;
+  img.alt = "Scenery in " + place.en;
+  img.loading = "lazy";
+  img.onerror = () => { img.style.display = "none"; };
+
+  const content = document.createElement("div");
+  content.className = "card-content";
+
+  const title = document.createElement("h3");
+  title.textContent = place.en + " · " + place.zh;
+
+  const tag = document.createElement("span");
+  tag.className = "region";
+  tag.textContent = place.region;
+
+  const description = document.createElement("p");
+  description.textContent = place.desc;
+
+  content.append(title, tag, description);
+
+  if (isFeatured) {
+    const save = document.createElement("button");
+    save.className = "save";
+    save.textContent = "♡ Save";
+    save.setAttribute("aria-pressed", "false");
+    save.addEventListener("click", () => {
+      const saved = save.classList.toggle("saved");
+      save.textContent = saved ? "♥ Saved" : "♡ Save";
+      save.setAttribute("aria-pressed", String(saved));
+    });
+    content.append(save);
+  }
+
+  card.append(img, content);
+  return card;
+}
+
+const featuredGrid = document.getElementById("featured");
+featured.forEach(place => featuredGrid.append(createCard(place, true)));
+
+const countyGrid = document.getElementById("countyGrid");
+function renderCounties() {
+  const query = document.getElementById("search").value.trim().toLowerCase();
+  const region = document.getElementById("region").value;
+  countyGrid.innerHTML = "";
+  const filtered = places.filter(place => {
+    const matchesQuery =
+      (place.en + " " + place.zh + " " + place.desc)
+        .toLowerCase().includes(query);
+    return matchesQuery && (region === "All" || place.region === region);
+  });
+  document.getElementById("count").textContent =
+    `Showing ${filtered.length} of 22 cities and counties`;
+  filtered.forEach(place => countyGrid.append(createCard(place)));
+}
+document.getElementById("search").addEventListener("input", renderCounties);
+document.getElementById("region").addEventListener("change", renderCounties);
+renderCounties();
+
+const recommendations = {
+  nature: {
+    title:"🌿 Alishan or Nantou",
+    text:"Enjoy green mountains, forest walks, fresh air, and beautiful sunrise views."
+  },
+  food: {
+    title:"🍜 Tainan",
+    text:"Explore historic streets, visit temples, and try delicious traditional snacks."
+  },
+  beach: {
+    title:"🌊 Kenting or Penghu",
+    text:"Relax beside the ocean, enjoy the sunshine, and watch a colorful sunset."
+  },
+  city: {
+    title:"🏙️ Taipei or Taichung",
+    text:"Explore cafés, museums, shopping areas, and lively night markets."
+  }
+};
+
+document.getElementById("plan").addEventListener("click", () => {
+  const choice = document.getElementById("mood").value;
+  const item = recommendations[choice];
+  document.getElementById("result").innerHTML =
+    `<strong>${item.title}</strong><br>${item.text}`;
+});
+
+document.getElementById("random").addEventListener("click", () => {
+  const keys = Object.keys(recommendations);
+  const item = recommendations[keys[Math.floor(Math.random() * keys.length)]];
+  document.getElementById("result").innerHTML =
+    `<strong>${item.title}</strong><br>${item.text}`;
+});
+</script>
+</body>
+</html>
